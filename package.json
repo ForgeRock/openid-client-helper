@@ -1,0 +1,52 @@
+{
+  "name": "openid-client-helper",
+  "version": "0.1.0",
+  "description": "An extension to [openid-client](https://www.npmjs.com/package/openid-client) for automated maintenance and transparent application of [OAuth 2.0](https://tools.ietf.org/html/rfc6749) access tokens.",
+  "main": "lib/index",
+  "scripts": {
+    "test": "echo \"Error: no test specified\"",
+    "lint": "eslint ./lib",
+    "docs": "jsdoc2md ./lib/* > ./docs/README.md",
+    "prepublish": "npm run lint && npm run docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ForgeRock/openid-client-helper.git"
+  },
+  "keywords": [
+    "auth",
+    "authorization",
+    "authentication",
+    "oauth",
+    "oauth2",
+    "openid",
+    "oidc",
+    "client",
+    "relying party",
+    "openid-client",
+    "helper"
+  ],
+  "author": "Konstantin Lapine <lapinek@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ForgeRock/openid-client-helper/issues"
+  },
+  "homepage": "https://github.com/ForgeRock/openid-client-helper#readme",
+  "dependencies": {
+    "node-fetch": "^2.6.0",
+    "openid-client": "^3.8.3"
+  },
+  "devDependencies": {
+    "eslint": "^6.6.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "jsdoc-to-markdown": "^5.0.2"
+  },
+  "engines": {
+    "node": "^10.13.0 || >=12.0.0"
+  },
+  "type": "commonjs"
+}

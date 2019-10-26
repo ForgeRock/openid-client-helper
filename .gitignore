@@ -1,0 +1,8 @@
+# Dependency directory
+node_modules
+
+# Extras for the docs
+docs_extras
+
+# macOS
+**/.DS_Store
