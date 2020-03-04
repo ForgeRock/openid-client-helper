@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\"",
     "lint": "eslint ./lib",
     "docs": "jsdoc2md ./lib/* > ./docs/README.md",
-    "prepublish": "npm run lint && npm run docs"
+    "prepare": "npm run lint && npm run docs"
   },
   "repository": {
     "type": "git",
@@ -34,16 +34,16 @@
   "homepage": "https://github.com/ForgeRock/openid-client-helper#readme",
   "dependencies": {
     "node-fetch": "^2.6.0",
-    "openid-client": "^3.8.3"
+    "openid-client": "^3.14.0"
   },
   "devDependencies": {
-    "eslint": "^6.6.0",
+    "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "jsdoc-to-markdown": "^5.0.2"
+    "jsdoc-to-markdown": "^5.0.3"
   },
   "engines": {
     "node": "^10.13.0 || >=12.0.0"
