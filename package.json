@@ -14,19 +14,19 @@
     "url": "git+https://github.com/ForgeRock/openid-client-helper.git"
   },
   "keywords": [
-    "auth",
-    "authorization",
-    "authentication",
     "oauth",
     "oauth2",
     "openid",
     "oidc",
-    "client",
     "relying party",
     "openid-client",
-    "helper"
+    "privilege restriction",
+    "audience restricted",
+    "scope restricted",
+    "access token",
+    "resource indicators"
   ],
-  "author": "Konstantin Lapine <lapinek@gmail.com>",
+  "author": "Konstantin Lapine <Konstantin.Lapine@forgerock.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ForgeRock/openid-client-helper/issues"

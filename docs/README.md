@@ -35,7 +35,7 @@ Represents an `openid-client-helper` instance.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| param0 | <code>Object</code> |  | Object wrapping all the arguments passed to the Constructor. |
+| param0 | <code>object</code> |  | Object wrapping all the arguments passed to the Constructor. |
 | param0.issuerMetadata | <code>object</code> |  | OpenID Provider (OP) metadata |
 | param0.issuerMetadata.issuer | <code>string</code> |  | The OP's Configuration Information endpoint or `openid-client` `Issuer` identifier |
 | [...param0.issuerMetadata] | <code>\*</code> |  | Additional `Issuer` metadata items. |
