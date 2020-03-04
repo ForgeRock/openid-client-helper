@@ -2,6 +2,29 @@
 
 An extension to [openid-client](https://www.npmjs.com/package/openid-client) for automated maintenance and transparent application of [OAuth 2.0](https://tools.ietf.org/html/rfc6749) access tokens.
 
+```javascript
+const Helper = require('openid-client-helper')
+
+const {
+  authorize,
+  fetch,
+  . . .
+} = Helper(params)
+
+router.get('/authorize', authorize(), (req, res) => {
+  fetch(
+    'https://oauth2-protected-resource',
+    options,
+    req
+  )
+  . . .
+}
+```
+
+See [How To Make It Work](#how-to-make-it-work) for details.
+
+## <a id="contents"></a>Contents
+
 * [Motivation](#motivation)
 * [Features](#features)
 * [How It Works](#how-it-works)
@@ -13,13 +36,13 @@ An extension to [openid-client](https://www.npmjs.com/package/openid-client) for
 
 [Back to top](#top)
 
-The openid-client library provides components for building a [Node.js](https://nodejs.org/en/) application acting as an OAuth 2.0 [client](https://tools.ietf.org/html/rfc6749#section-1.1) that can also be extended to an [OpenID Connect](https://openid.net/connect/) (OIDC) [Relying Party](https://openid.net/specs/openid-connect-core-1_0.html#Terminology). The library includes the [Passport.js](http://www.passportjs.org/) authentication strategy middleware. When using openid-client by itself, it is left up to the developer to implement routes for each REST API call authorized by an access token.
+The openid-client library provides components for building a [Node.js](https://nodejs.org/en/) application acting as an OAuth 2.0 [client](https://tools.ietf.org/html/rfc6749#section-1.1) extended to an [OpenID Connect](https://openid.net/connect/) (OIDC) [Relying Party](https://openid.net/specs/openid-connect-core-1_0.html#Terminology). When using openid-client by itself, it is left up to the developer to implement routes for each REST API call authorized by an access token.
 
 The openid-client-helper library provides a [node-fetch](https://www.npmjs.com/package/node-fetch) wrapper for making requests to different resources protected by the same [authorization server](https://tools.ietf.org/html/rfc6749#section-1.1). Each request is automatically crafted with a fresh, resource-specific access token appropriate for the requested URI.
 
 After initial authorization by the [resource owner](https://tools.ietf.org/html/rfc6749#section-1.1), access tokens for individual resources are obtained with a [refresh token](https://tools.ietf.org/html/rfc6749#section-1.5), entirely via a secure back-channel, without any further resource owner involvement and not relying on their saved consent, and not collecting the resource owner password credentials.
 
-This means that the client, once authorized, will be able to perform API requests with automatically obtained individually-scoped and potentially [Audience Restricted](https://tools.ietf.org/html/draft-ietf-oauth-security-topics-13#section-4.8.1.3) access tokens—according to the [OAuth 2.0 Security Best Current Practice](https://tools.ietf.org/html/draft-ietf-oauth-security-topics-13) (BCP). This also means that the format and the content of the access tokens can be specific to the respective resource servers.
+This means that the client, once authorized, will be able to perform API requests with automatically obtained individually-scoped and potentially [Audience Restricted](https://tools.ietf.org/html/draft-ietf-oauth-security-topics-14#section-4.8.1.1.3) access tokens—according to the [OAuth 2.0 Security Best Current Practice](https://tools.ietf.org/html/draft-ietf-oauth-security-topics-14) (BCP). This also means that the format and the content of the access tokens can be specific to the respective resource servers.
 
 In addition, openid-client-helper provides convenience methods for performing OAuth 2.0 [authorization code](https://tools.ietf.org/html/rfc6749#section-1.3.1) grant, deauthorization, and accessing [ID Token Claims](https://openid.net/specs/openid-connect-core-1_0.html#IDToken) about the resource owner.
 
@@ -40,9 +63,9 @@ In addition, openid-client-helper provides convenience methods for performing OA
 
 [Back to top](#top)
 
-The openid-client-helper library is represented by a CommonJS module, which exports a constructor function. The constructor function takes a set of parameters including openid-client [Issuer](https://github.com/panva/node-openid-client/tree/master/docs#issuer) and [Client](https://github.com/panva/node-openid-client/tree/master/docs#client) metadata, so that the instance can act as a client or a relying party. If a set of resources is provided as the `resources` parameter, it will be used to obtain and apply resource-specific, potentially audience-restricted access tokens. Additional parameters could be included to change the helper's default behavior regarding the use of [Proof Key for Code Exchange by OAuth Public Clients](https://tools.ietf.org/html/rfc7636) (PKCE) and [Resource Indicators for OAuth 2.0](https://tools.ietf.org/html/draft-ietf-oauth-resource-indicators-08), whether the resource owner approved "master" access token should be used as a substitute for failing resource-specific tokens, and how the user session object is identified. The constructor will also accept a function to apply customizations to the underlying openid-client functionality.
+The openid-client-helper library is represented by a CommonJS module, which exports a constructor function. The constructor function takes a set of parameters including openid-client [Issuer](https://github.com/panva/node-openid-client/tree/master/docs#issuer) and [Client](https://github.com/panva/node-openid-client/tree/master/docs#client) metadata, so that the instance can act as a client or a relying party. If a set of resources is provided as the `resources` parameter, it will be used to obtain and apply resource-specific, potentially audience-restricted access tokens. Additional parameters could be included to change the helper's default behavior regarding the use of [Proof Key for Code Exchange by OAuth Public Clients](https://tools.ietf.org/html/rfc7636) (PKCE) and [Resource Indicators for OAuth 2.0](https://tools.ietf.org/html/rfc8707), whether the resource owner approved "master" access token should be used as a substitute for failing resource-specific tokens, and how the user session object is identified. The constructor will also accept a function to apply customizations to the underlying openid-client functionality.
 
-The `resources` parameter is intended to contain a set of protected resources each of which is associated with the resource-specific OAuth 2.0 [scope](https://tools.ietf.org/html/rfc6749#section-3.3). Optionally, a resource identifier will be added as the [resource](https://tools.ietf.org/html/draft-ietf-oauth-resource-indicators-08#section-2) parameter to the resource-specific token requests, making it available for the systems adopting the Resource Indicators for OAuth 2.0 draft. The scope property associated with the resource will be included as the `scope` parameter, so that the audience restriction can be derived from a unique scope.
+The `resources` parameter is intended to contain a set of protected resources each of which is associated with the resource-specific OAuth 2.0 [scope](https://tools.ietf.org/html/rfc6749#section-3.3). Optionally, a resource identifier can be added as the [resource](https://tools.ietf.org/html/rfc8707#section-2) parameter to the resource-specific token requests, making it available for the systems adopting Resource Indicators for OAuth 2.0. The scope property associated with the resource will be included as the `scope` parameter in the resource-specific token request, allowing to derive the audience restriction from a unique scope.
 
 > Even if true audience restriction could not be expressed via a unique scope, restricting an access token to a subset of the scopes authorized by the resource owner may still be beneficial when one of the [resource servers](https://tools.ietf.org/html/rfc6749#section-1.1) gets compromised, and if the scopes for different resource servers do not completely overlap.
 
@@ -50,21 +73,19 @@ The helper instance supplies Express.js middleware for performing the authorizat
 
 > The main objective of this library is maintaining authorization state that can be used for making HTTP requests to resources protected by OAuth 2.0 on behalf of the resource owner. The authorization code grant is the only recommended OAuth 2.0 flow for a typical web application, where the client software is directly interacting with the user-agent. As implementing this grant seems to be a common task a web application developer may face, the helper allows to do it with minimal effort.
 >
-> Note that the underlying openid-client functionality expects ID token to be present. Hence, the OIDC authentication is always requested via the `openid` scope.
+> The underlying openid-client functionality expects ID token to be present. Hence, the OIDC authentication is always requested via the `openid` scope during the authorization request.
 
 Alternatively, the authorization may be obtained with external tools; for example, with the openid-client [Passport.js strategy](https://github.com/panva/node-openid-client/tree/master/docs#strategy). Then, the authorization results could be added to the helper instance manually, by utilizing its public interface.
 
 The helper's token management functionality relies on presence of a refresh token authorized with all the scopes required by the resources collectively. The main benefit of using a refresh token in this case is the option to perform partial, resource-specific authorization via the back-channel, with no assistance or saved consent from the resource owner, and no user-agent involvement.
 
-> In the context of a third-party [confidential OAuth 2.0 client](https://tools.ietf.org/html/rfc6749#section-2.1) or [native application](https://tools.ietf.org/html/rfc6749#section-9) authorized by a resource owner, the [refresh token grant](https://tools.ietf.org/html/rfc6749#section-6) is often considered as the most practical option for automated renewal of short lived access tokens that are shared with a resource server. However, a stolen access token with limited life span may still cause significant damage, especially during an automated attack.
-
-> If you need to manage resource-specific access tokens in the browser, you may want to consider the [appAuthHelper](https://www.npmjs.com/package/appauthhelper) library, which can be used with a [public OAuth 2.0 client](https://tools.ietf.org/html/rfc6749#section-2.1) in a [SPA](https://en.wikipedia.org/wiki/Single-page_application).
+> If you need to manage resource-specific access tokens in the browser, you may consider the [appAuthHelper](https://www.npmjs.com/package/appauthhelper) library, which can be used with a [public OAuth 2.0 client](https://tools.ietf.org/html/rfc6749#section-2.1) in a [SPA](https://en.wikipedia.org/wiki/Single-page_application).
 
 However it is obtained, the refresh token could be saved in a helper instance and serve as inexhaustible source of access tokens specially minted for the respective resource server, until the refresh token itself is expired or revoked. The authorized helper instance can be used then as a "fetch proxy" for requests made to APIs protected by OAuth 2.0.
 
-For this, openid-client-helper provides redefined node-fetch `fetch` method. If this method is used, each fetch request will be crafted with a specific to the requested resource access token. The resource will be identified as the left part of the requested URI. If necessary, the access token will be automatically obtained or renewed while handling the request. If no access token is available for a particular resource, the request will be passed through to the underlying node-fetch method.
+For this, openid-client-helper provides redefined node-fetch `fetch` method. If this method is used, each fetch request will be crafted with a specific to the requested resource access token. The resource will be identified by matching the requested URI. If necessary, the access token will be automatically obtained or renewed while handling the request. If no access token can be obtained for a particular resource, the request will be passed through to the underlying node-fetch method unchanged.
 
-> It is worth noting that access token audience and scope restriction may not be important for some providers working exclusively with a single, first party resource (server), under the same ownership. For separately maintained resource servers, however, these restrictions have been recommended by the [OAuth 2.0 Bearer Token Usage](https://tools.ietf.org/html/rfc6750#section-5.2) standard, the OAuth 2.0 Security BCP, and the OIDC [core specs](https://openid.net/specs/openid-connect-core-1_0.html#AccessTokenRedirect).
+> For separately maintained resource servers, implementing access token audience and scope restriction has been recommended by the [OAuth 2.0 Bearer Token Usage](https://tools.ietf.org/html/rfc6750#section-5.2) standard, the OIDC [core specs](https://openid.net/specs/openid-connect-core-1_0.html#AccessTokenRedirect), and the [OAuth 2.0 Security BCP](https://tools.ietf.org/html/draft-ietf-oauth-security-topics-14#section-2.3).
 
 ## <a id="how-to-make-it-work"></a>How To Make It Work
 
@@ -304,9 +325,9 @@ router.get('/protected/resource', unauthorized({
     req // Provide user session context.
   )
   .then((response) => {
-    // Check if the access token has expired or otherwise invalid.
+    // Optionally, check if for some reason the resource-specific access token could not be renewed automatically.
     if (getWWWAuthenticateHeaderAttributes(response).error === 'invalid_token') {
-      handleInvalidAccessToken() // For example, reauthorize the client.
+      handleInvalidAccessToken() // For example, try to reauthorize the client.
     }
 
     // . . .
@@ -314,7 +335,7 @@ router.get('/protected/resource', unauthorized({
 }
 ```
 
-> This means that even existing code utilizing node-fetch could be used with the redefined fetch method to make requests to a protected resource if the existing calls are supplied with the additional `req` argument.
+> This means that even existing code utilizing node-fetch could be used with the redefined fetch method for making requests to a protected resource—by providing the additional `req` argument.
 
 Note the use of another helper's public method, `getWWWAuthenticateHeaderAttributes(response) => object`. If the access token included in the request to a protected resource has expired, the response received from the resource server is to contain [WWW-Authenticate](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/WWW-Authenticate) header with the error attribute populated with the "invalid_token" value, as described in the [OAuth 2.0 Bearer Token Usage](https://tools.ietf.org/html/rfc6750#section-3.1) standard. The helper itself checks for access token expiration using this method once and, if the token did expire, conveniently attempts to refresh it before repeating the fetch request. After that one attempt, it will pass the fetch response to the original caller unchecked. This means that if the access token deemed to be invalid by the original caller, it can go proactive and reauthorize the client, report the error to the user, terminate the application, etc.—whichever seems to be the most appropriate action in each particular situation.
 
@@ -342,4 +363,5 @@ If this behavior needs to be altered or aided, a completion handler can be provi
 
 [Back to top](#top)
 
-## [Express.js example](examples/express/README.md)
+### [Basic Express.js example](examples/express/README.md)
+### [ForgeRock example](https://github.com/ForgeRock/exampleOAuth2Clients/tree/master/node-openid-client)
