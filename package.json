@@ -1,6 +1,6 @@
 {
   "name": "openid-client-helper",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An extension to [openid-client](https://www.npmjs.com/package/openid-client) for automated maintenance and transparent application of [OAuth 2.0](https://tools.ietf.org/html/rfc6749) access tokens.",
   "main": "lib/index",
   "scripts": {
