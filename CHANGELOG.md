@@ -6,7 +6,8 @@ All notable changes to this project will be documented in this file.
 
 ### Features
 
-* Add `authorizationId` parameter for sharing an existing authorization between different helper instances and applications (for horizontal scaling).
+* Add `authorizationId` parameter for sharing an existing authorization between different helper instances and applications (for horizontal scaling) ([#6](https://github.com/ForgeRock/openid-client-helper/pull/6)) ([42c3951](https://github.com/ForgeRock/openid-client-helper/pull/6/commits/42c3951f510deda8102d07e736fa0a4cd846c768)).
+
 
 ## [0.1.2](https://github.com/ForgeRock/openid-client-helper/compare/v0.1.1...v0.1.2) (2020-04-07)
 
