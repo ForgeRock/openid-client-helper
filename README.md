@@ -186,7 +186,7 @@ Finally, you may choose to overwrite some configuration defaults.
   The helper instance saves the authorization state under a key in the session object. By default, if no input is provided, the key is generated randomly based on the current timestamp. If `authorizationId` is defined, it's value is used to generate the key. Doing so allows different helper instances to share an authorization.
 
   > In order to scale an application horizontally, while using a shared session store, the key, under which the authorization state is stored, can be controlled, so that an authorization is available throughout instances of the application running in parallel. If `authorizationId` is not set, a random key is generated for each helper instance.
-  
+
 * `customize`
 
   You can customize the default behavior of the Issuer and Client classes and their respective instances as described in [Customizing](https://github.com/panva/node-openid-client/tree/master/docs#customizing) section of the openid-client documentation. For example:

@@ -50,7 +50,7 @@ Represents an `openid-client-helper` instance.
 | [param0.resources] | <code>object</code> | <code>{ &#x27;https://&#x27;: { scope: &#x27;*&#x27; } }</code> | A set of resources associated with resource specific scope(s). Each resource key is, generally, to comply with the proposed [Resource Parameter](https://tools.ietf.org/html/draft-ietf-oauth-resource-indicators-08#section-2) definition, as it may be used as the resource indicator in systems that adopt the draft. The resource keys will be compared against the URI in requests to a protected API resource, and the key matching the left part of the URI the most will be used to retrieve corresponding access token. |
 | [param0.useMasterAccessToken] | <code>boolean</code> | <code>false</code> | Indicates whether or not the "master" access token, the one associated with scopes approved by the resource owner, is to be used if a resource specific access token cannot be obtained. Setting this to `true` is not normally recommended, for it leads to use of an access token that is not audience restricted. |
 | [param0.sessionKey] | <code>string</code> | <code>&quot;session&quot;</code> | The key identifying the session object attached to requests. |
-| [param0.authorizationId] | <code>string</code> | | Identifier for the authorization state saved in the session object, so that an authorization could be shared between the helper instances and used for horizontal scaling. |
+| [param0.authorizationId] | <code>string</code> |  | Identifier for the authorization state saved in the session object, so that an authorization could be shared between the helper instances and used for horizontal scaling. |
 | [param0.useResourceIndicators] | <code>boolean</code> | <code>false</code> | Indicates whether [Resource Indicators for OAuth 2.0](https://tools.ietf.org/html/draft-ietf-oauth-resource-indicators-08) are supported by the authorization server. |
 | [param0.customize] | <code>function</code> |  | A function to modify openid-client defaults using its [Customizing](https://github.com/panva/node-openid-client/tree/master/docs#customizing) means. The function will be sent the `custom` options object and the `Issuer` constructor. When an `issuer` or `client` instance is created, it will be provided as a parameter along with the `custom` object. This means that the `customize` function should check for presence of the `Issuer`, `issuer`, or/and `client` parameters, if those were to be modified. |
 
@@ -234,7 +234,7 @@ Returns attributes of the WWW-Authenticate response header from an HTTP response
 <a name="module_openid-client-helper--module.exports..authorizationKey"></a>
 
 #### module.exports~authorizationKey
-Unique identifier for this authorization in session.
+Identifier for this authorization in session. Base on custom data or generate randomly.
 
 **Kind**: inner constant of [<code>module.exports</code>](#exp_module_openid-client-helper--module.exports)  
 <a name="module_openid-client-helper--module.exports..authorization"></a>
