@@ -34,7 +34,7 @@
   "homepage": "https://github.com/ForgeRock/openid-client-helper#readme",
   "dependencies": {
     "node-fetch": "^2.6.0",
-    "openid-client": "^3.14.2"
+    "openid-client": "^4.7.4"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
